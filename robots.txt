@@ -1,3 +1,3 @@
 User-agent: *
 Disallow:
-Sitemap: https://Moshtaghi.id.ir/sitemap.xml
+Sitemap: https://moshtaghi.id.ir/sitemap.xml
