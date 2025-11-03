@@ -666,7 +666,6 @@ document.addEventListener("DOMContentLoaded", () => {
   
 
 <script src="Theme/js/script.js"></script>
-
 <script>
 const dot = document.querySelector('.cursor-dot');
 const ring = document.querySelector('.cursor-ring');
@@ -674,32 +673,46 @@ const ring = document.querySelector('.cursor-ring');
 let mouseX = 0, mouseY = 0;
 let dotX = 0, dotY = 0;
 let ringX = 0, ringY = 0;
-let opacity = 0;
+let isVisible = false;
 
-document.addEventListener('mousemove', e => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    opacity = 1;
-    dot.style.opacity = opacity;
-    ring.style.opacity = opacity;
-});
+// تشخیص موبایل
+const isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
-document.addEventListener('mouseleave', () => {
-    opacity = 0;
-});
+// فقط روی دسکتاپ فعال باشه (یا اگر خواستی روی تبلت هم)
+if (!isMobile) {
+    // --- فقط روی دسکتاپ ---
+    document.addEventListener('mousemove', e => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        isVisible = true;
+        dot.style.opacity = 1;
+        ring.style.opacity = 1;
+    });
 
+    document.addEventListener('mouseleave', () => {
+        isVisible = false;
+    });
+} else {
+    // --- روی موبایل: کاملاً مخفی و غیرفعال ---
+    dot.style.display = 'none';
+    ring.style.display = 'none';
+}
+
+// انیمیشن فقط وقتی فعال باشه که نیازه
 function animate() {
-    // نقطه سریع‌تر از دایره حرکت کند تا حس دنبال شدن ایجاد شود
-    dotX += (mouseX - dotX) * 0.2;
-    dotY += (mouseY - dotY) * 0.2;
-    ringX += (mouseX - ringX) * 0.1;
-    ringY += (mouseY - ringY) * 0.1;
+    if (!isMobile && isVisible) {
+        dotX += (mouseX - dotX) * 0.2;
+        dotY += (mouseY - dotY) * 0.2;
+        ringX += (mouseX - ringX) * 0.1;
+        ringY += (mouseY - ringY) * 0.1;
 
-    dot.style.transform = `translate(${dotX}px, ${dotY}px) translate(-50%, -50%)`;
-    ring.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%, -50%)`;
-
-    dot.style.opacity = opacity;
-    ring.style.opacity = opacity;
+        dot.style.transform = `translate(${dotX}px, ${dotY}px) translate(-50%, -50%)`;
+        ring.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%, -50%)`;
+    } else {
+        // وقتی غیرفعاله، opacity رو صفر کن
+        dot.style.opacity = 0;
+        ring.style.opacity = 0;
+    }
 
     requestAnimationFrame(animate);
 }

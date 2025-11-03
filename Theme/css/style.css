@@ -968,31 +968,30 @@ About Section
         ::-webkit-scrollbar-thumb:hover {
             background-color: #888; /* روشن‌تر در هاور */
         }
-.cursor-dot {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 5px;
-        height: 5px;
-        background-color: #2c3e50; /* رنگ سرمه‌ای */
-        border-radius: 50%;
-        pointer-events: none;
-        transform: translate(-50%, -50%);
-        opacity: 0;
-        z-index: 9999;
-    }
+.cursor-dot, .cursor-ring {
+    position: fixed;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.3s ease; /* نرم‌تر */
+    z-index: 9999;
+}
 
-    /* دایره توخالی */
-    .cursor-ring {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 25px;
-        height: 25px;
-        border: 2px solid #2c3e50; /* رنگ سرمه‌ای */
-        border-radius: 50%;
-        pointer-events: none;
-        transform: translate(-50%, -50%);
-        opacity: 0;
-        z-index: 9998;
-    }
+.cursor-dot {
+    width: 6px;
+    height: 6px;
+    background-color: #2c3e50;
+    border-radius: 50%;
+    left: 0;
+    top: 0;
+}
+
+.cursor-ring {
+    width: 30px;
+    height: 30px;
+    border: 2.5px solid #2c3e50;
+    border-radius: 50%;
+    left: 0;
+    top: 0;
+    z-index: 9998;
+}
