@@ -525,49 +525,22 @@
         <div class="contact-info-item">
   <p class="social-links">
     <span>من در شبکه های اجتماعی</span>
-   <!-- ایمیل (با JavaScript برای تشخیص اپ) -->
-<a href="mailto:mohammadsadeghmoshtaghi1388@gmail.com"
-   id="email-link"
-   title="ارسال ایمیل (اگر Gmail نصب داری، در اپ باز می‌شه)"
-   data-clean-url="ارسال ایمیل"
-   onclick="handleEmailClick(event)">
+   <!-- ایمیل: گوشی → اپ Gmail | کامپیوتر → Gmail Web -->
+<a href="mailto:mohammadsadeghmoshtaghi1388@gmail.com" 
+   class="email-link"
+   data-web="https://mail.google.com/mail/?view=cm&fs=1&to=mohammadsadeghmoshtaghi1388@gmail.com"
+   title="ارسال ایمیل">
   <i class="fas fa-envelope"></i>
 </a>
 <script>
-function handleEmailClick(event) {
-  // تشخیص موبایل (Android/iOS)
-  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-  
-  if (!isMobile) {
-    // دسکتاپ: مستقیم mailto رو باز کن
-    return true; // اجازه بده لینک کار کنه
-  }
-  
-  // موبایل: mailto رو امتحان کن
-  const emailLink = document.getElementById('email-link');
-  const mailtoUrl = emailLink.href;
-  const webFallbackUrl = 'https://mail.google.com/mail/?view=cm&fs=1&to=mohammadsadeghmoshtaghi1388@gmail.com';
-  
-  // پنهان کردن لینک موقت (برای جلوگیری از دوبار کلیک)
-  emailLink.style.display = 'none';
-  
-  // باز کردن mailto (سعی برای اپ Gmail)
-  window.location.href = mailtoUrl;
-  
-  // تایمر: اگر اپ باز نشد (fallback بعد از ۱.۵ ثانیه)
-  setTimeout(() => {
-    // اگر هنوز روی همون صفحه‌ایم (اپ باز نشده)، alert و fallback نشون بده
-    if (document.visibilityState === 'visible') {
-      alert('اپ Gmail نصب نیست!\n\nبرای ارسال ایمیل، روی این لینک کلیک کنید:\n' + webFallbackUrl);
-      
-      // باز کردن لینک وب
-      window.open(webFallbackUrl, '_blank');
-      
-      // برگردوندن لینک (اختیاری)
-      emailLink.style.display = 'inline-flex';
+document.querySelectorAll('.email-link').forEach(link => {
+  link.addEventListener('click', function(e) {
+    if (!/Mobi|Android|iPhone/i.test(navigator.userAgent)) {
+      e.preventDefault();
+      window.open(this.dataset.web, '_blank');
     }
-  }, 1500); // ۱.۵ ثانیه صبر (زمان کافی برای باز شدن اپ)
-}
+  });
+});
 </script>
     <a href="https://t.me/SyntaxTerrorDevNode" target="_blank" title="تلگرام: @SyntaxTerrorDevNode">
   <i class="fab fa-telegram-plane"></i>
